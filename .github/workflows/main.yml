@@ -1,0 +1,23 @@
+name: Github sample test
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout the repo
+        uses: action/checkout@v2
+        with:
+          node-version: '14.x'
+          cache: 'npm'
+      - name: Install dependencies
+        run: npm install
+      - name: Build app  
+        run: npm run build --if-present
+      - name: Run test       
+        run: CI=true npm test
+        env:
+          CI: true
